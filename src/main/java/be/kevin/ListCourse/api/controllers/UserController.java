@@ -42,9 +42,9 @@ public class UserController implements Serializable {
     @PostMapping("create")
     public ResponseEntity<User> create (@RequestBody User user ) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok(userService.create(user));test
+        return ResponseEntity.ok(userService.create(user));
     }
-
+    //cecii est un commentaire
     @PutMapping("update/{id}")
     public ResponseEntity<User> update(@PathVariable(value = "id") Long idUser, @RequestBody User update) {
         return ResponseEntity.ok(this.userService.updateId(idUser, update.getFirstName() ,update.getName()));
