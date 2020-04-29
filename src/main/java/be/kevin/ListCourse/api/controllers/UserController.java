@@ -42,7 +42,7 @@ public class UserController implements Serializable {
     @PostMapping("create")
     public ResponseEntity<User> create (@RequestBody User user ) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok(userService.create(user));
+        return ResponseEntity.ok(userService.create(user));test
     }
 
     @PutMapping("update/{id}")
