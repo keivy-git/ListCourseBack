@@ -1,6 +1,5 @@
 package be.kevin.ListCourse.service;
 
-import be.kevin.ListCourse.dto.UserDTO;
 import be.kevin.ListCourse.dto.UserInfoDTO;
 import be.kevin.ListCourse.entities.User;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
@@ -14,7 +13,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -35,8 +33,6 @@ public class UserService implements UserDetailsService {
     @Autowired
     private UserInfoMapper userInfoMapper;
 
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
 
     public List<UserInfoDTO> get(){
         List<User> users = userRepository.findAll();
@@ -46,11 +42,13 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException{
-        Objects.requireNonNull(name);
-        User user =  userRepository.findByName(name)
-                .orElseThrow(()-> new UsernameNotFoundException("user non trouvé"));
-    return user;
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        return userMapper.toDto(
+                userRepository.findByName(name)
+                .orElseThrow(() -> new UsernameNotFoundException("L'utilisateur n'a pas été trouvé")
+                )
+        );
+
     }
 
     public User create (User user)  {
@@ -82,17 +80,6 @@ public class UserService implements UserDetailsService {
             throw new NotDeleteException();
         }
     }
-    //    public Long create(UserDTO form) throws NotFoundException, confirmPassword {
-//
-//        if (!form.passwordEqualsConfirm()) {
-//            throw new confirmPassword("Le mot de passe répéter est different");
-//        }
-//        userRepository.save(userMapper.fromFormulaire(form));
-//
-//        User user = userRepository.findByName(form.getName()).orElse(new User());
-//
-//        return user.getIdUser();
-//    }
 
 }
 

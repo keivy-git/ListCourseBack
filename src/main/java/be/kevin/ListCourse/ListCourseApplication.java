@@ -1,7 +1,9 @@
 package be.kevin.ListCourse;
 
+import be.kevin.ListCourse.entities.Coupon;
 import be.kevin.ListCourse.entities.Role;
 import be.kevin.ListCourse.entities.User;
+import be.kevin.ListCourse.repository.CouponRepository;
 import be.kevin.ListCourse.repository.RoleRepository;
 import be.kevin.ListCourse.repository.UserRepository;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +11,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.time.LocalDate;
 
 //@EnableAutoConfiguration
 @SpringBootApplication
@@ -21,11 +25,13 @@ public class ListCourseApplication {
 
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
+	private CouponRepository couponRepository;
 	private PasswordEncoder passwordEncoder;
 
-	public ListCourseApplication(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+	public ListCourseApplication(UserRepository userRepository, RoleRepository roleRepository, CouponRepository couponRepository, PasswordEncoder passwordEncoder) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
+		this.couponRepository = couponRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
@@ -33,7 +39,18 @@ public class ListCourseApplication {
 	public void insertDb() {
 		addUsers();
 		addRoles();
+		addCoupon();
 	}
+	private void addCoupon(){
+		Coupon reduct = new Coupon();
+		reduct.setName("-50% sur les bananes");
+		reduct.setDateBegin(LocalDate.of(2020, 4, 30));
+		reduct.setDateEnd(LocalDate.of(2020, 5, 10));
+		reduct.setDescription("Acheter pour 2 kg de banane et obtenez une réduction de 50 %");
+
+		couponRepository.save(reduct);
+	}
+
 	private void addRoles(){
 		Role Admin = new Role();
 		Admin.setName("Administrateur");

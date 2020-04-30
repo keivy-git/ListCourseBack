@@ -16,19 +16,17 @@ public class UserInfoMapper implements GenericMapper<UserInfoDTO, User> {
 
     @Override
     public UserInfoDTO toDto(User user) {
-        UserInfoDTO userDTO = new UserInfoDTO();
-        userDTO.setIdUser(user.getIdUser());
-        userDTO.setFirstName(user.getFirstName());
-        userDTO.setName(user.getName());
-        userDTO.setDateBirth(user.getDateBirth());
-        userDTO.setRoles(user.getRoles());
-        return userDTO;
+        return new UserInfoDTO(
+                user.getIdUser(),
+                user.getFirstName(),
+                user.getName(),
+                user.getDateBirth()
+        );
     }
 
     @Override
     public User toEntity(UserInfoDTO userDTO) {
         User user = new User();
-        user.setIdUser(userDTO.getIdUser());
         user.setFirstName(userDTO.getFirstName());
         user.setName(userDTO.getName());
         user.setDateBirth(userDTO.getDateBirth());

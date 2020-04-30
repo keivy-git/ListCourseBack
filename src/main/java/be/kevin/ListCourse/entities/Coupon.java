@@ -2,6 +2,7 @@ package be.kevin.ListCourse.entities;
 
 
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -31,15 +32,12 @@ public class Coupon {
     @Column
     private String description;
 
-
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column (name = "dateBegin_coupon")
     private LocalDate dateBegin;
 
-
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column (name="dateEnd_Coupon")
     private LocalDate  dateEnd;
-
-
-
 
 }

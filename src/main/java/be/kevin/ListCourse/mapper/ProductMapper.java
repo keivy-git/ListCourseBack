@@ -11,12 +11,13 @@ public class ProductMapper implements GenericMapper<ProductDTO, Product> {
 
     @Override
     public ProductDTO toDto(Product product) {
-        ProductDTO productDTO = new ProductDTO();
-        productDTO.setIdProduct(product.getIdProduct());
-        productDTO.setName(product.getName());
-        productDTO.setQuantity(product.getQuantity());
-        productDTO.setPoids(product.getPoids());
-        return productDTO;
+        return new ProductDTO(
+                product.getIdProduct(),
+                product.getName(),
+                product.getPoids(),
+                product.getQuantity()
+
+        );
     }
 
     @Override

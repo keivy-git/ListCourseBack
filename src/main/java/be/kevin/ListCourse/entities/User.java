@@ -2,7 +2,7 @@ package be.kevin.ListCourse.entities;
 
 
 
-import be.kevin.ListCourse.utils.verifMail.EmailValid;
+//import be.kevin.ListCourse.utils.verifMail.EmailValid;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -29,7 +29,7 @@ import java.util.Set;
 @Data
 @Table(name ="user")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User implements UserDetails {
+public class User {
 
     /** création des colonnes de la table */
     @Id
@@ -47,7 +47,7 @@ public class User implements UserDetails {
     private String password;
 
     @Column(nullable = false)
-    @EmailValid
+//    @EmailValid
     private String email;
 
     /** permet d'instaurer une format à la date, un paterne jour, mois, année */
@@ -67,40 +67,5 @@ public class User implements UserDetails {
     //@ManyToMany(mappedBy = "user")
     //private Set<Group> groups;
 
-//region UserDetails méthode
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
-    public String getUsername() {
-        return name;
-    }
-    @Override
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-    //endregion
 
 }

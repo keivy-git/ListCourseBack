@@ -11,5 +11,10 @@ public class ProductDTO  {
     private int quantity;
     private int poids;
 
-
+    public ProductDTO(Long idProduct, String name, int quantity, int poids) {
+        this.idProduct = idProduct;
+        this.name = name;
+        this.quantity = quantity;
+        this.poids = poids;
+    }
 }

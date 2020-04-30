@@ -1,5 +1,6 @@
 package be.kevin.ListCourse.service;
 
+import be.kevin.ListCourse.entities.Product;
 import be.kevin.ListCourse.repository.ProductRepository;
 import be.kevin.ListCourse.dto.ProductDTO;
 import be.kevin.ListCourse.mapper.ProductMapper;
@@ -11,7 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements CrudService<ProductDTO, Long> {
+public class ProductService{
 
     @Autowired
     private ProductRepository productRepository;
@@ -19,31 +20,28 @@ public class ProductService implements CrudService<ProductDTO, Long> {
     private ProductMapper productMapper;
 
 
-    @Override
-    public List<ProductDTO> getAll() {
-        return productRepository.findAll()
-                .stream()
-                .map(productMapper::toDto)
-                .collect(Collectors.toList());
+
+    public List<Product> getAll() {
+        return productRepository.findAll();
     }
 
-    @Override
-    public Optional<ProductDTO> getOneById(Long id) {
+
+    public Optional<Product> getOneById(Long id) {
         return Optional.empty();
     }
 
-    @Override
-    public int create(ProductDTO entity) {
-        return 0;
+
+    public Product create() {
+        return null;
     }
 
-    @Override
-    public boolean update(ProductDTO entity, Long id) {
-        return false;
+
+    public Product update() {
+        return null;
     }
 
-    @Override
-    public boolean delete(Long id) {
-        return false;
+
+    public Product delete() {
+        return null;
     }
 }
