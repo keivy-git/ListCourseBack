@@ -41,11 +41,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter  {
     /**
      * csrf() : désactive la fonction csrf pour les tests sur postman
      * cette fonction est indispensable et devra être autorisé avant la production de l'appli
-
+     *
+     *header().frameOPtions() a été aussi désactiver, sinon je ne pouvais plus afficher ma base de donnée H2
      */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable();
+        http.headers().frameOptions().disable();
     }
 
 }

@@ -21,6 +21,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 
     }
 
+    @ExceptionHandler(NotUpdateException.class)
+    public ResponseEntity<ErrorMess> HandleNotUpdateException (NotUpdateException ex, WebRequest request) {
+        return new ResponseEntity<>(
+                new ErrorMess(ex.getMessage(), request.getDescription(false)),
+                HttpStatus.BAD_REQUEST);
 
-
+    }
 }

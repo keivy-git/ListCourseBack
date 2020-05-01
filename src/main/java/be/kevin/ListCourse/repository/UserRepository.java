@@ -1,6 +1,6 @@
 package be.kevin.ListCourse.repository;
 
-import be.kevin.ListCourse.dto.UserInfoDTO;
+
 import be.kevin.ListCourse.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

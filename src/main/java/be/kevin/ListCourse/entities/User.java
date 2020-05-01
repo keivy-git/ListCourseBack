@@ -3,6 +3,9 @@ package be.kevin.ListCourse.entities;
 
 
 //import be.kevin.ListCourse.utils.verifMail.EmailValid;
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +28,7 @@ import java.util.Set;
  *
  *  @see Table Création de la table user.
  */
+
 @Entity
 @Data
 @Table(name ="user")
@@ -43,11 +47,15 @@ public class User {
     @Column(unique = true, nullable = false, length=50)
     private String name;
 
+
+    /** @JsonProperty permet de définir un accès précis au information... Je peux créer un mot de passe, mais pas l'afficher via le json */
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
-//    @EmailValid
+    @Email
     private String email;
 
     /** permet d'instaurer une format à la date, un paterne jour, mois, année */

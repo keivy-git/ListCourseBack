@@ -3,6 +3,7 @@ package be.kevin.ListCourse.dto;
 
 import be.kevin.ListCourse.entities.Role;
 //import be.kevin.ListCourse.utils.verifMail.EmailValid;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +25,9 @@ public class UserDTO implements UserDetails {
         private Long idUser;
         private String firstName;
         private String name;
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String email;
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String password;
         private String confirmPassword;
         private LocalDate dateBirth;

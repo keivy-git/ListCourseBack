@@ -1,9 +1,10 @@
 package be.kevin.ListCourse.api.controllers;
 
 
-import be.kevin.ListCourse.dto.UserInfoDTO;
+import be.kevin.ListCourse.dto.UserDTO;
 import be.kevin.ListCourse.entities.User;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
+import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.UserMapper;
 import be.kevin.ListCourse.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class UserController implements Serializable {
     private PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
-    public ResponseEntity<List<UserInfoDTO>> getAll(){
+    public ResponseEntity<List<UserDTO>> getAll(){
         return ResponseEntity.ok(this.userService.get());
     }
 
@@ -40,13 +41,13 @@ public class UserController implements Serializable {
     }
 
     @PostMapping("create")
-    public ResponseEntity<User> create (@RequestBody User user ) {
+    public ResponseEntity<User> create (@RequestBody User user ){
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return ResponseEntity.ok(userService.create(user));
     }
 
     @PutMapping("update/{id}")
-    public ResponseEntity<User> update(@PathVariable(value = "id") Long idUser, @RequestBody User update) {
+    public ResponseEntity<User> update(@PathVariable(value = "id") Long idUser, @RequestBody User update) throws NotUpdateException {
         return ResponseEntity.ok(this.userService.updateId(idUser, update.getFirstName() ,update.getName()));
     }
     @DeleteMapping("delete/{id}")

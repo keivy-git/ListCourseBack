@@ -27,6 +27,8 @@ public class CouponService {
     public Coupon create(Coupon coupon) {
         return this.couponRepository.save(coupon);
     }
+
+
     public Optional<Coupon> getOneById(Long idCoupon) {
         return this.couponRepository.findById(idCoupon);
     }
