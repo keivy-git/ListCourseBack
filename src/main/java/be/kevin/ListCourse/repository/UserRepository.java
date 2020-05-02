@@ -8,7 +8,10 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 /**
+ * DAO = Data Access Object
  * pour les opérations avec la base de donnée
+ *
+ * @Repository : cette annotation est appliquée à la classe afin d'indiquer à Spring qu'il s'agit d'une classe qui gère les données.
  */
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {

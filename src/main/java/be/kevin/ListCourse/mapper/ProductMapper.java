@@ -19,7 +19,6 @@ public class ProductMapper implements GenericMapper<ProductDTO, Product> {
 
         );
     }
-
     @Override
     public Product toEntity(ProductDTO productDTO) {
         Product product = new Product();

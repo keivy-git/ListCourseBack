@@ -3,6 +3,7 @@ package be.kevin.ListCourse.api.controllers;
 
 import be.kevin.ListCourse.dto.UserDTO;
 import be.kevin.ListCourse.entities.User;
+import be.kevin.ListCourse.exceptionHandler.NotCreateException;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.UserMapper;
@@ -22,6 +23,7 @@ import java.util.Optional;
 @RequestMapping("/api-user")
 public class UserController implements Serializable {
 
+    /** @Autowired afin que Spring se charge d'en fabriquer une instance */
     @Autowired
     private UserService userService;
     @Autowired
@@ -41,7 +43,8 @@ public class UserController implements Serializable {
     }
 
     @PostMapping("create")
-    public ResponseEntity<User> create (@RequestBody User user ){
+    public ResponseEntity<User> create (@RequestBody User user ) throws NotCreateException {
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return ResponseEntity.ok(userService.create(user));
     }

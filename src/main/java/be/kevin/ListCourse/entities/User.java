@@ -48,19 +48,17 @@ public class User {
     private String name;
 
 
-    /** @JsonProperty permet de définir un accès précis au information... Je peux créer un mot de passe, mais pas l'afficher via le json */
+    /** @JsonProperty permet de définir un accès précis a l'information... Je peux créer un mot de passe, mais pas l'afficher via le json */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
-    @Email
+    @Email(message = "Cette e-mail n'est pas valide")
     private String email;
 
     /** permet d'instaurer une format à la date, un paterne jour, mois, année */
-
-
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     @Column
     private LocalDate dateBirth;

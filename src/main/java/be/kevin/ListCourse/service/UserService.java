@@ -2,6 +2,7 @@ package be.kevin.ListCourse.service;
 
 import be.kevin.ListCourse.dto.UserDTO;
 import be.kevin.ListCourse.entities.User;
+import be.kevin.ListCourse.exceptionHandler.NotCreateException;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.UserMapper;
@@ -32,8 +33,10 @@ public class UserService implements UserDetailsService {
     private UserMapper userMapper;
 
 
-    public User create (User user)  {
-        return this.userRepository.save(user);
+    public User create (User user) throws NotCreateException {
+
+         return this.userRepository.save(user);
+
     }
 
     public List<UserDTO> get(){
@@ -73,11 +76,8 @@ public class UserService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return userMapper.toDto(
-                userRepository.findByName(name)
-                        .orElseThrow(() -> new UsernameNotFoundException("L'utilisateur n'a pas été trouvé")
-                        ));
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return null;
     }
 }
 

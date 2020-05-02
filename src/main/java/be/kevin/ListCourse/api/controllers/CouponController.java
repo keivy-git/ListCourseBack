@@ -50,7 +50,6 @@ public class CouponController {
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long idCoupon) throws NotDeleteException {
         couponService.delete(idCoupon);
-
         return ResponseEntity.ok(Boolean.TRUE) ;
     }
 

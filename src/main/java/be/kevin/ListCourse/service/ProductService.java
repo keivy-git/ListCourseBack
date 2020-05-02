@@ -1,14 +1,18 @@
 package be.kevin.ListCourse.service;
 
+import be.kevin.ListCourse.entities.Category;
 import be.kevin.ListCourse.entities.Product;
+import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.repository.ProductRepository;
 import be.kevin.ListCourse.dto.ProductDTO;
 import be.kevin.ListCourse.mapper.ProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,23 +29,34 @@ public class ProductService{
         return productRepository.findAll();
     }
 
+    public Product create(Product product) {
+        return this.productRepository.save(product);
+    }
 
-    public Optional<Product> getOneById(Long id) {
-        return Optional.empty();
+    public Optional<Product> getOneById(Long idProduct) {
+        return this.productRepository.findById(idProduct);
     }
 
 
-    public Product create() {
-        return null;
+    public Product update(Long idProduct, String name, int quantity, int poids, Set<Category> category) {
+        Optional<Product> optionalProduct = this.getOneById(idProduct);
+        if (optionalProduct.isEmpty()) {
+            return null;
+        }
+        Product toUpdate = optionalProduct.get();
+        toUpdate.setName(name);
+        toUpdate.setQuantity(quantity);
+        toUpdate.setPoids(poids);
+        toUpdate.setCategorys(category);
+        return this.productRepository.save(toUpdate);
     }
 
-
-    public Product update() {
-        return null;
-    }
-
-
-    public Product delete() {
-        return null;
+    public void delete(Long idProduct) throws NotDeleteException {
+        if (this.productRepository.existsById(idProduct)) {
+            this.productRepository.deleteById(idProduct);
+        }
+        else {
+            throw new NotDeleteException();
+        }
     }
 }
