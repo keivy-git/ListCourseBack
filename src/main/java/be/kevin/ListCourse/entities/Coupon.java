@@ -6,8 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *  @see Entity permet à JPA de transporter des données entre l'application et la BDD.
@@ -42,6 +40,5 @@ public class Coupon {
     @Column (name="dateEnd_Coupon")
     private LocalDate  dateEnd;
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = User.class, mappedBy = "coupons")
-    private Set<User> users = new HashSet<>();
+
 }

@@ -3,8 +3,6 @@ package be.kevin.ListCourse.entities;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  *  @see Entity permet à JPA de transporter des données entre l'application et la BDD.
@@ -26,9 +24,6 @@ public class Category {
 
     @Column(nullable = false, length=50)
     private String name;
-
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Product.class, mappedBy = "categories")
-    private Set<Product> products = new HashSet<>();
 
 
 }

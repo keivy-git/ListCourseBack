@@ -38,9 +38,4 @@ public class Product {
     @JoinTable(name = "categoryProduct", joinColumns = @JoinColumn(name = "idProduct"), inverseJoinColumns = @JoinColumn(name = "idCategory"))
     private Set<Category> categories = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = User.class, mappedBy = "products")
-    private Set<User> users = new HashSet<>();
-
-
-
 }

@@ -4,8 +4,6 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Data
@@ -24,9 +22,6 @@ public class Role implements GrantedAuthority {
 
     @Column
     private String DescriptionRole;
-
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = User.class, mappedBy = "roles")
-    private Set<User> users = new HashSet<>();
 
     @Override
     public String getAuthority() {
