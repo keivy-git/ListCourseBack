@@ -34,9 +34,7 @@ public class UserService implements UserDetailsService {
 
 
     public User create (User user) throws NotCreateException {
-
          return this.userRepository.save(user);
-
     }
 
     public List<UserDTO> get(){
@@ -63,7 +61,6 @@ public class UserService implements UserDetailsService {
         }
     }
 
-
     public void deleteId(Long idUser) throws NotDeleteException {
         if (this.userRepository.existsById(idUser) ) {
 
@@ -74,10 +71,9 @@ public class UserService implements UserDetailsService {
         }
     }
 
-
     @Override
-    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        return null;
+    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
+        return userRepository.findByName(name);
     }
 }
 

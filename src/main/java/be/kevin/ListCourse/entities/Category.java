@@ -27,7 +27,8 @@ public class Category {
     @Column(nullable = false, length=50)
     private String name;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Product.class, mappedBy = "categories")
     private Set<Product> products = new HashSet<>();
+
 
 }

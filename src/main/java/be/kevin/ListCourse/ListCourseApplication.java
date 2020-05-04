@@ -1,11 +1,7 @@
 package be.kevin.ListCourse;
 
-import be.kevin.ListCourse.entities.Coupon;
-import be.kevin.ListCourse.entities.Role;
-import be.kevin.ListCourse.entities.User;
-import be.kevin.ListCourse.repository.CouponRepository;
-import be.kevin.ListCourse.repository.RoleRepository;
-import be.kevin.ListCourse.repository.UserRepository;
+import be.kevin.ListCourse.entities.*;
+import be.kevin.ListCourse.repository.*;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -26,42 +22,101 @@ public class ListCourseApplication {
 	private UserRepository userRepository;
 	private RoleRepository roleRepository;
 	private CouponRepository couponRepository;
+	private ProductRepository productRepository;
+	private CategoryRepository categoryRepository;
 	private PasswordEncoder passwordEncoder;
 
-	public ListCourseApplication(UserRepository userRepository, RoleRepository roleRepository, CouponRepository couponRepository, PasswordEncoder passwordEncoder) {
+	public ListCourseApplication(UserRepository userRepository, RoleRepository roleRepository,
+								 CouponRepository couponRepository, PasswordEncoder passwordEncoder,
+								 ProductRepository productRepository, CategoryRepository categoryRepository) {
 		this.userRepository = userRepository;
 		this.roleRepository = roleRepository;
 		this.couponRepository = couponRepository;
+		this.productRepository = productRepository;
+		this.categoryRepository = categoryRepository;
 		this.passwordEncoder = passwordEncoder;
 	}
 
+	/** l'initialisation des données doit se faire dans cet ordre précis pour les liaison entre elle*/
 	@EventListener(ApplicationReadyEvent.class)
 	public void insertDb() {
-		addUsers();
 		addRoles();
 		addCoupon();
+		addCategory();
+		addProduct();
+		addUsers();
 	}
-	private void addCoupon(){
-		Coupon reduct = new Coupon();
-		reduct.setName("-50% sur les bananes");
-		reduct.setDateBegin(LocalDate.of(2020, 4, 30));
-		reduct.setDateEnd(LocalDate.of(2020, 5, 10));
-		reduct.setDescription("Acheter pour 2 kg de banane et obtenez une réduction de 50 %");
 
-		couponRepository.save(reduct);
+	private void addCategory(){
+
+		Category fruit = new Category();
+		fruit.setName("fruit");
+
+		Category legume = new Category();
+		legume.setName("legume");
+
+		Category surgeler = new Category();
+		surgeler.setName("surgeler");
+
+		Category conserve = new Category();
+		conserve.setName("conserve");
+
+		categoryRepository.save(fruit);
+		categoryRepository.save(legume);
+		categoryRepository.save(surgeler);
+		categoryRepository.save(conserve);
+	}
+
+	private void addProduct() {
+		Product product_banane = new Product();
+		product_banane.setName("Banane");
+		product_banane.setQuantity(1);
+		product_banane.setPoids(1000);
+		product_banane.getCategories().add(categoryRepository.findByName("fruit"));
+		product_banane.getCategories().add(categoryRepository.findByName("surgeler"));
+
+
+		Product product_brocoli = new Product();
+		product_brocoli.setName("Brocoli");
+		product_brocoli.setQuantity(1);
+		product_brocoli.getCategories().add(categoryRepository.findByName("legume"));
+		product_brocoli.getCategories().add(categoryRepository.findByName("surgeler"));
+		product_brocoli.getCategories().add(categoryRepository.findByName("conserve"));
+
+		productRepository.save(product_banane);
+		productRepository.save(product_brocoli);
+	}
+
+	private void addCoupon(){
+		Coupon reduct_banane = new Coupon();
+		reduct_banane.setName("-50% sur les bananes");
+		reduct_banane.setDateBegin(LocalDate.of(2020, 4, 30));
+		reduct_banane.setDateEnd(LocalDate.of(2020, 5, 10));
+		reduct_banane.setDescription("Acheter pour 2 kg de banane et obtenez une réduction de 50 %");
+
+
+		Coupon reduct_pomme = new Coupon();
+		reduct_pomme.setName("-50% sur les pommes");
+		reduct_pomme.setDateBegin(LocalDate.of(2020, 4, 30));
+		reduct_pomme.setDateEnd(LocalDate.of(2020, 4, 20));
+		reduct_pomme.setDescription("Acheter pour 1 kg de pommes et obtenez une réduction de 50 %");
+
+
+		couponRepository.save(reduct_banane);
+		couponRepository.save(reduct_pomme);
 	}
 
 	private void addRoles(){
-		Role Admin = new Role();
-		Admin.setName("Administrateur");
-		Admin.setDescriptionRole("Role qui a tout les droits sur l'application");
+		Role adminRole = new Role();
+		adminRole.setName("Administrateur");
+		adminRole.setDescriptionRole("Role qui a tout les droits sur l'application");
 
-		Role Membre = new Role();
-		Membre.setName("Membre");
-		Membre.setDescriptionRole("Membre qui a les droits sur leurs profils, la création d'une liste utilisateur");
+		Role memberRole = new Role();
+		memberRole.setName("Membre");
+		memberRole.setDescriptionRole("Membre qui a les droits sur leurs profils, la création d'une liste produit");
 
-		roleRepository.save(Admin);
-		roleRepository.save(Membre);
+		roleRepository.save(adminRole);
+		roleRepository.save(memberRole);
 	}
 	private void addUsers() {
 		User kev = new User();
@@ -71,16 +126,20 @@ public class ListCourseApplication {
 		kev.setEmail("kev@gmail.com");
 		kev.getRoles().add(roleRepository.findByName("Administrateur"));
 		kev.getRoles().add(roleRepository.findByName("Membre"));
+		kev.getCoupons().add(couponRepository.findByName("-50% sur les bananes"));
+		kev.getCoupons().add(couponRepository.findByName("-50% sur les pommes"));
 
-		User Lambda = new User();
-		Lambda.setFirstName("lol");
-		Lambda.setName("Lambda");
-		Lambda.setPassword(passwordEncoder.encode("Lambda"));
-		Lambda.setEmail("Lamda@gmail.com");
-		Lambda.getRoles().add(roleRepository.findByName("Membre"));
+
+		User erwin = new User();
+		erwin.setFirstName("Erwin");
+		erwin.setName("Richard");
+		erwin.setPassword(passwordEncoder.encode("erwin"));
+		erwin.setEmail("richard@gmail.com");
+		erwin.getRoles().add(roleRepository.findByName("Membre"));
+		erwin.getCoupons().add(couponRepository.findByName("-50% sur les pommes"));
 
 		userRepository.save(kev);
-		userRepository.save(Lambda);
+		userRepository.save(erwin);
 
 	}
 

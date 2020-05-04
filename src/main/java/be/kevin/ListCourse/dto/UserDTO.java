@@ -2,18 +2,17 @@ package be.kevin.ListCourse.dto;
 
 
 import be.kevin.ListCourse.entities.Role;
-//import be.kevin.ListCourse.utils.verifMail.EmailValid;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+
+//import be.kevin.ListCourse.utils.verifMail.EmailValid;
 
 
 /**Data Transfert Object */
@@ -29,13 +28,10 @@ public class UserDTO implements UserDetails {
         private String email;
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String password;
+        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String confirmPassword;
         private LocalDate dateBirth;
-        private Set<Role> roles  = new HashSet();
 
-        public boolean passwordEqualsConfirm() {
-                return password.equals(confirmPassword);
-        }
 
         public UserDTO(Long idUser, String firstName, String name, String email, String password, LocalDate dateBirth) {
                 this.idUser = idUser;

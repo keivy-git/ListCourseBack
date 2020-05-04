@@ -1,10 +1,5 @@
 package be.kevin.ListCourse.entities;
 
-
-
-//import be.kevin.ListCourse.utils.verifMail.EmailValid;
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AccessLevel;
 import lombok.Data;
@@ -12,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -33,7 +27,7 @@ import java.util.Set;
 @Data
 @Table(name ="user")
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User {
+public class User implements UserDetails {
 
     /** création des colonnes de la table */
     @Id
@@ -64,14 +58,47 @@ public class User {
     private LocalDate dateBirth;
 
 
-    @OneToMany
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Role.class)
     @JoinTable(name = "userRole", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idRole"))
-//    private Set<Role> roles= new HashSet<>();
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Coupon.class)
+    @JoinTable(name = "userCoupon", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idCoupon"))
+    private Set<Coupon> coupons = new HashSet<>();
 
-    //@ManyToMany(mappedBy = "user")
-    //private Set<Group> groups;
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Product.class)
+    @JoinTable(name = "userSaveListProduct", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idProduct"))
+    private Set<Product> products = new HashSet<>();
 
+//region Implements UserDetails
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
 
+    @Override
+    public String getUsername() {
+        return null;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
+    //endregion
 }

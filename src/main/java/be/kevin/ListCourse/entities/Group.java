@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "[group]")
+@Table(name = "[GROUP]")
 public class Group {
 
     @Id

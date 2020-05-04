@@ -25,8 +25,8 @@ public class Role implements GrantedAuthority {
     @Column
     private String DescriptionRole;
 
-//    @OneToMany
-//    private Set<User> roleUsers = new HashSet<>();
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = User.class, mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     @Override
     public String getAuthority() {

@@ -42,7 +42,7 @@ public class ProductController {
     }
     @PutMapping("update/{id}")
     public ResponseEntity<Product> update(@PathVariable(value = "id") Long idProduct, @RequestBody Product update) {
-        return ResponseEntity.ok(this.productService.update(idProduct, update.getName() ,update.getQuantity(), update.getPoids(), update.getCategorys()));
+        return ResponseEntity.ok(this.productService.update(idProduct, update.getName() ,update.getQuantity(), update.getPoids(), update.getCategories()));
     }
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long idProduct) throws NotDeleteException {

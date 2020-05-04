@@ -47,7 +47,6 @@ public class ProductService{
         toUpdate.setName(name);
         toUpdate.setQuantity(quantity);
         toUpdate.setPoids(poids);
-        toUpdate.setCategorys(category);
         return this.productRepository.save(toUpdate);
     }
 
