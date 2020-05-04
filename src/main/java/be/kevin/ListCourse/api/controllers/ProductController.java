@@ -1,7 +1,5 @@
 package be.kevin.ListCourse.api.controllers;
 
-import be.kevin.ListCourse.dto.ProductDTO;
-import be.kevin.ListCourse.entities.Coupon;
 import be.kevin.ListCourse.entities.Product;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.mapper.ProductMapper;

@@ -1,7 +1,6 @@
 package be.kevin.ListCourse.dto;
 
 
-import be.kevin.ListCourse.entities.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,10 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
-//import be.kevin.ListCourse.utils.verifMail.EmailValid;
 
 
 /**Data Transfert Object */

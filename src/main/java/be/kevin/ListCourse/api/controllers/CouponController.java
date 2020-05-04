@@ -1,12 +1,9 @@
 package be.kevin.ListCourse.api.controllers;
 
-import be.kevin.ListCourse.dto.CouponDTO;
 import be.kevin.ListCourse.entities.Coupon;
-import be.kevin.ListCourse.entities.User;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.mapper.CouponMapper;
 import be.kevin.ListCourse.service.CouponService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
