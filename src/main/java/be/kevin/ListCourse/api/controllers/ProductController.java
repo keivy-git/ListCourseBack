@@ -31,7 +31,9 @@ public class ProductController {
     /**Créer ses propre coupons via formulaire*/
     @PostMapping("create")
     public ResponseEntity<Product> create (@RequestBody Product product) {
-        return ResponseEntity.ok(productService.create(product));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.create(product));
+//        return ResponseEntity.ok(productService.create(product));
     }
     @GetMapping("{id}")
     public ResponseEntity<Product> getOneById(@PathVariable(value = "id") Long idCoupon) {

@@ -33,7 +33,7 @@ public class CouponController {
     /**Créer ses propre coupons via formulaire*/
     @PostMapping("create")
     public ResponseEntity<Coupon> create (@RequestBody Coupon coupon) {
-        return ResponseEntity.ok(couponService.create(coupon));
+        return ResponseEntity.status(HttpStatus.CREATED).body(couponService.create(coupon));
     }
     @GetMapping("{id}")
     public ResponseEntity<Coupon> getOneById(@PathVariable(value = "id") Long idCoupon) {

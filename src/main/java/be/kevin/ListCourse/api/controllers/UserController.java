@@ -60,9 +60,9 @@ public class UserController implements Serializable {
     /**Creation ou register d'un utilisateur */
     @PostMapping({"create", "register"})
     public ResponseEntity<User> create (@RequestBody User user ) throws NotCreateException {
-
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.ok(userService.create(user));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
+//        return ResponseEntity.ok(userService.create(user));
     }
     /** update d'un utilisateur */
     @PutMapping("update/{id}")
