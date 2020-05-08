@@ -1,15 +1,19 @@
 package be.kevin.ListCourse.service;
 
+import be.kevin.ListCourse.dto.CouponDTO;
 import be.kevin.ListCourse.entities.Coupon;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
+import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.CouponMapper;
 import be.kevin.ListCourse.repository.CouponRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CouponService {
@@ -20,30 +24,34 @@ public class CouponService {
     private CouponMapper couponMapper;
 
 
-    public List<Coupon> getAll() {
-        return couponRepository.findAll();
+    public CouponDTO create(CouponDTO couponDTO) {
+        return couponMapper.toDto(this.couponRepository.save(couponMapper.toEntity(couponDTO)));
     }
 
-    public Coupon create(Coupon coupon) {
-        return this.couponRepository.save(coupon);
+    public List<CouponDTO> getAll(){
+        List<Coupon> coupons = couponRepository.findAll();
+        return coupons.stream()
+                .map((couponMapper::toDto))
+                .collect(Collectors.toList());
     }
 
-
-    public Optional<Coupon> getOneById(Long idCoupon) {
-        return this.couponRepository.findById(idCoupon);
+    public CouponDTO getOneById(Long idCoupon) throws NotFoundException {
+        return couponMapper.toDto(this.couponRepository.findById(idCoupon)
+                .orElseThrow(() -> new NotFoundException("l'id des coupons n'a pas été trouvé")));
     }
 
-    public Coupon update(Long idCoupon, String name, String description, LocalDate dateBegin, LocalDate dateEnd) {
-        Optional<Coupon> optionalCoupon = this.getOneById(idCoupon);
-        if (optionalCoupon.isEmpty()) {
-            return null;
+    public CouponDTO update(Long idCoupon, String name, String description, LocalDate dateBegin, LocalDate dateEnd) throws NotUpdateException {
+        Optional<Coupon> optionalCoupon = this.couponRepository.findById(idCoupon);
+        if (this.couponRepository.existsById(idCoupon)) {
+            Coupon toUpdate = optionalCoupon.get();
+            toUpdate.setName(name);
+            toUpdate.setDescription(description);
+            toUpdate.setDateBegin(dateBegin);
+            toUpdate.setDateEnd(dateEnd);
+            return couponMapper.toDto(this.couponRepository.save(toUpdate));
+        } else {
+            throw new NotUpdateException();
         }
-        Coupon toUpdate = optionalCoupon.get();
-        toUpdate.setName(name);
-        toUpdate.setDescription(description);
-        toUpdate.setDateBegin(dateBegin);
-        toUpdate.setDateEnd(dateEnd);
-        return this.couponRepository.save(toUpdate);
     }
 
     public void delete(Long idCoupon) throws NotDeleteException {

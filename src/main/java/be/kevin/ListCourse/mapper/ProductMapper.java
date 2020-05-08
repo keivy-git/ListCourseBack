@@ -15,7 +15,8 @@ public class ProductMapper implements GenericMapper<ProductDTO, Product> {
                 product.getIdProduct(),
                 product.getName(),
                 product.getPoids(),
-                product.getQuantity()
+                product.getQuantity(),
+                product.getCategories()
 
         );
     }
@@ -26,6 +27,7 @@ public class ProductMapper implements GenericMapper<ProductDTO, Product> {
         product.setName(productDTO.getName());
         product.setQuantity(productDTO.getQuantity());
         product.setPoids(productDTO.getPoids());
+        product.setCategories(productDTO.getCategories());
         return product;
     }
 }

@@ -1,16 +1,20 @@
 package be.kevin.ListCourse.service;
 
+import be.kevin.ListCourse.dto.ProductDTO;
 import be.kevin.ListCourse.entities.Category;
 import be.kevin.ListCourse.entities.Product;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
+import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.ProductMapper;
 import be.kevin.ListCourse.repository.ProductRepository;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductService{
@@ -22,29 +26,34 @@ public class ProductService{
 
 
 
-    public List<Product> getAll() {
-        return productRepository.findAll();
+    public ProductDTO create(ProductDTO productDTO) {
+        return productMapper.toDto(this.productRepository.save(productMapper.toEntity(productDTO)));
     }
 
-    public Product create(Product product) {
-        return this.productRepository.save(product);
+    public List<ProductDTO> getAll(){
+        List<Product> products = productRepository.findAll();
+        return products.stream()
+                .map((productMapper::toDto))
+                .collect(Collectors.toList());
     }
 
-    public Optional<Product> getOneById(Long idProduct) {
-        return this.productRepository.findById(idProduct);
+    public ProductDTO getOneById(Long idProduct) throws NotFoundException {
+        return productMapper.toDto(this.productRepository.findById(idProduct)
+                .orElseThrow(() -> new NotFoundException("L'id du produit n'a pas été trouvé")));
     }
 
-
-    public Product update(Long idProduct, String name, int quantity, int poids, Set<Category> category) {
-        Optional<Product> optionalProduct = this.getOneById(idProduct);
-        if (optionalProduct.isEmpty()) {
-            return null;
+    public ProductDTO update(Long idProduct, String name, int quantity, int poids, Set<Category> category) throws NotUpdateException {
+        Optional<Product> optional = this.productRepository.findById(idProduct);
+        if (this.productRepository.existsById(idProduct)) {
+            Product toUpdate = optional.get();
+            toUpdate.setName(name);
+            toUpdate.setQuantity(quantity);
+            toUpdate.setPoids(poids);
+            toUpdate.setCategories(category);
+            return productMapper.toDto(this.productRepository.save(toUpdate));
+        } else {
+            throw new NotUpdateException();
         }
-        Product toUpdate = optionalProduct.get();
-        toUpdate.setName(name);
-        toUpdate.setQuantity(quantity);
-        toUpdate.setPoids(poids);
-        return this.productRepository.save(toUpdate);
     }
 
     public void delete(Long idProduct) throws NotDeleteException {

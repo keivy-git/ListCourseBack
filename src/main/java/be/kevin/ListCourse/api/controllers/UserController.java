@@ -3,14 +3,13 @@ package be.kevin.ListCourse.api.controllers;
 
 import be.kevin.ListCourse.dto.UserDTO;
 import be.kevin.ListCourse.entities.Role;
-import be.kevin.ListCourse.entities.User;
-import be.kevin.ListCourse.exceptionHandler.NotCreateException;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.UserMapper;
 import be.kevin.ListCourse.repository.UserRepository;
 import be.kevin.ListCourse.service.UserService;
 import be.kevin.ListCourse.utils.configSecu.JwtTokenProvider;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +23,6 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost"})
@@ -49,24 +47,24 @@ public class UserController implements Serializable {
 
     @GetMapping("/")
     public ResponseEntity<List<UserDTO>> getAll(){
-        return ResponseEntity.ok(this.userService.get());
+        return ResponseEntity.ok(this.userService.getAll());
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> getOneById(@PathVariable(value = "id") Long idUser) {
-        Optional<User> optional = userService.getOneById(idUser);
-            return new ResponseEntity<User>(optional.get(), HttpStatus.FOUND);
+    public ResponseEntity<UserDTO> getOneById(@PathVariable(value = "id") Long idUser) throws NotFoundException {
+        UserDTO userDTO = userService.getOneById(idUser);
+            return new ResponseEntity<UserDTO>(userDTO, HttpStatus.FOUND);
     }
     /**Creation ou register d'un utilisateur */
     @PostMapping({"create", "register"})
-    public ResponseEntity<User> create (@RequestBody User user ) throws NotCreateException {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(user));
-//        return ResponseEntity.ok(userService.create(user));
+    public ResponseEntity<UserDTO> create (@RequestBody UserDTO userDTO ) {
+        userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+        return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(userDTO));
     }
+
     /** update d'un utilisateur */
     @PutMapping("update/{id}")
-    public ResponseEntity<User> update(@PathVariable(value = "id") Long idUser, @RequestBody User update) throws NotUpdateException {
+    public ResponseEntity<UserDTO> update(@PathVariable(value = "id") Long idUser, @RequestBody UserDTO update) throws NotUpdateException {
         return ResponseEntity.ok(this.userService.updateId(idUser, update.getFirstName() ,update.getName()));
     }
     @DeleteMapping("delete/{id}")
@@ -80,25 +78,8 @@ public class UserController implements Serializable {
 
     @PostMapping("login")
     public ResponseEntity login(@RequestBody UserDTO userDTO ) {
-        try {
-            String login = userDTO.getName();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login, userDTO.getPassword()));
-            String token = jwtTokenProvider
-                    .createToken(login,
-                            this.userRepository
-                                    .findByName(login)
-                                    .getRoles()
-                                    .stream()
-                                    .map(Role::getAuthority)
-                                    .collect(Collectors.toList())
-                    );
-            Map<Object, Object> model = new HashMap<>();
-            model.put("name", login);
-            model.put("token", token);
-            return ResponseEntity.ok(model);
-        } catch (Exception e) {
-            throw new BadCredentialsException("Le login et le mot de passe est incorrecte");
-        }
+        userService.login(userDTO);
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.login(userDTO));
     }
 
 
