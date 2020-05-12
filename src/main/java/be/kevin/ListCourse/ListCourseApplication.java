@@ -72,16 +72,16 @@ public class ListCourseApplication {
 		product_banane.setName("Banane");
 		product_banane.setQuantity(1);
 		product_banane.setPoids(1000);
-		product_banane.getCategories().add(categoryRepository.findByName("fruit"));
-		product_banane.getCategories().add(categoryRepository.findByName("surgeler"));
+//		product_banane.getCategories().add(categoryRepository.findByName("fruit"));
+//		product_banane.getCategories().add(categoryRepository.findByName("surgeler"));
 
 
 		Product product_brocoli = new Product();
 		product_brocoli.setName("Brocoli");
 		product_brocoli.setQuantity(1);
-		product_brocoli.getCategories().add(categoryRepository.findByName("legume"));
-		product_brocoli.getCategories().add(categoryRepository.findByName("surgeler"));
-		product_brocoli.getCategories().add(categoryRepository.findByName("conserve"));
+//		product_brocoli.getCategories().add(categoryRepository.findByName("legume"));
+//		product_brocoli.getCategories().add(categoryRepository.findByName("surgeler"));
+//		product_brocoli.getCategories().add(categoryRepository.findByName("conserve"));
 
 		productRepository.save(product_banane);
 		productRepository.save(product_brocoli);
@@ -126,8 +126,6 @@ public class ListCourseApplication {
 		kev.setEmail("kev@gmail.com");
 		kev.getRoles().add(roleRepository.findByName("Administrateur"));
 		kev.getRoles().add(roleRepository.findByName("Membre"));
-		kev.getCoupons().add(couponRepository.findByName("-50% sur les bananes"));
-		kev.getCoupons().add(couponRepository.findByName("-50% sur les pommes"));
 
 
 		User erwin = new User();
@@ -136,7 +134,6 @@ public class ListCourseApplication {
 		erwin.setPassword(passwordEncoder.encode("erwin"));
 		erwin.setEmail("richard@gmail.com");
 		erwin.getRoles().add(roleRepository.findByName("Membre"));
-		erwin.getCoupons().add(couponRepository.findByName("-50% sur les pommes"));
 
 		userRepository.save(kev);
 		userRepository.save(erwin);

@@ -28,10 +28,10 @@ public class Product {
     @Column(nullable = false, length=50)
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private int quantity;
 
-    @Column(nullable = false)
+    @Column
     private int poids;
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Category.class)
