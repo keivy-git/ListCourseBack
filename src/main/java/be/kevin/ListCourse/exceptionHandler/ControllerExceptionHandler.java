@@ -28,11 +28,4 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
                 HttpStatus.BAD_REQUEST);
 
     }
-    @ExceptionHandler(NotCreateException.class)
-    public ResponseEntity<ErrorMess> HandleNotCreateException (NotCreateException ex, WebRequest request) {
-        return new ResponseEntity<>(
-                new ErrorMess(ex.getMessage(), request.getDescription(false)),
-                HttpStatus.BAD_REQUEST);
-
-    }
 }

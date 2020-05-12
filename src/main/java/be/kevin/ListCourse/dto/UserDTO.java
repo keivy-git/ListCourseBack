@@ -26,16 +26,14 @@ public class UserDTO implements UserDetails {
         private String password;
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String confirmPassword;
-        private LocalDate dateBirth;
 
 
-        public UserDTO(Long idUser, String firstName, String name, String email, String password, LocalDate dateBirth) {
+        public UserDTO(Long idUser, String firstName, String name, String email, String password) {
                 this.idUser = idUser;
                 this.firstName = firstName;
                 this.name = name;
                 this.email = email;
                 this.password = password;
-                this.dateBirth = dateBirth;
         }
 
         @Override

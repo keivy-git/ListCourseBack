@@ -2,7 +2,6 @@ package be.kevin.ListCourse.api.controllers;
 
 
 import be.kevin.ListCourse.dto.UserDTO;
-import be.kevin.ListCourse.entities.Role;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.UserMapper;
@@ -14,16 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost"})
 @RestController

@@ -52,10 +52,6 @@ public class User implements UserDetails {
     @Email(message = "Cette e-mail n'est pas valide")
     private String email;
 
-    /** permet d'instaurer une format à la date, un paterne jour, mois, année */
-    @DateTimeFormat(pattern = "dd-MM-yyyy")
-    @Column
-    private LocalDate dateBirth;
 
 
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Role.class)
