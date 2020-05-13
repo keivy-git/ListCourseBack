@@ -4,15 +4,11 @@ package be.kevin.ListCourse.api.controllers;
 import be.kevin.ListCourse.dto.UserDTO;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
-import be.kevin.ListCourse.mapper.UserMapper;
-import be.kevin.ListCourse.repository.UserRepository;
 import be.kevin.ListCourse.service.UserService;
-import be.kevin.ListCourse.utils.configSecu.JwtTokenProvider;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,15 +24,7 @@ public class UserController implements Serializable {
     @Autowired
     private UserService userService;
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
 
 
     @GetMapping("/")
@@ -71,7 +59,7 @@ public class UserController implements Serializable {
     /** params de connexion*/
 
     @PostMapping("login")
-    public ResponseEntity login(@RequestBody UserDTO userDTO ) {
+    public ResponseEntity<UserDTO> login(@RequestBody UserDTO userDTO ) {
         userService.login(userDTO);
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.login(userDTO));
     }

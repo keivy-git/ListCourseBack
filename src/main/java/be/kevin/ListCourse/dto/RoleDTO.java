@@ -2,7 +2,6 @@ package be.kevin.ListCourse.dto;
 
 
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 
 @Data
 public class RoleDTO {

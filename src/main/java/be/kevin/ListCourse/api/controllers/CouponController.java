@@ -3,7 +3,6 @@ package be.kevin.ListCourse.api.controllers;
 import be.kevin.ListCourse.dto.CouponDTO;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
-import be.kevin.ListCourse.mapper.CouponMapper;
 import be.kevin.ListCourse.service.CouponService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +19,6 @@ public class CouponController {
 
     @Autowired
     private CouponService couponService;
-    @Autowired
-    private CouponMapper couponMapper;
 
     /**
      * Affiche les coupons déjà dans la bdd

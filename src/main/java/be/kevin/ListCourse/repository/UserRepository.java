@@ -5,8 +5,6 @@ import be.kevin.ListCourse.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
-
 /**
  * DAO = Data Access Object
  * pour les opérations avec la base de donnée

@@ -6,7 +6,6 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDate;
 import java.util.Collection;
 
 
@@ -20,7 +19,6 @@ public class UserDTO implements UserDetails {
         private Long idUser;
         private String firstName;
         private String name;
-        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String email;
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String password;

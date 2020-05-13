@@ -3,7 +3,6 @@ package be.kevin.ListCourse.api.controllers;
 import be.kevin.ListCourse.dto.ProductDTO;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
-import be.kevin.ListCourse.mapper.ProductMapper;
 import be.kevin.ListCourse.service.ProductService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = {"http://localhost:4200", "http://localhost"})
 @RestController
@@ -21,8 +19,6 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
-    @Autowired
-    private ProductMapper productMapper;
 
 
     @GetMapping("/")

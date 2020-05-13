@@ -10,7 +10,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 
-//@EnableAutoConfiguration
 @SpringBootApplication
 public class ListCourseApplication {
 
