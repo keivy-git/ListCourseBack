@@ -26,12 +26,12 @@ public class UserController implements Serializable {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
+    /**Afficher la liste des users */
     @GetMapping("/")
     public ResponseEntity<List<UserDTO>> getAll(){
         return ResponseEntity.ok(this.userService.getAll());
     }
-
+    /**Afficher un utilisateur par son id */
     @GetMapping("{id}")
     public ResponseEntity<UserDTO> getOneById(@PathVariable(value = "id") Long idUser) throws NotFoundException {
         UserDTO userDTO = userService.getOneById(idUser);
@@ -49,6 +49,7 @@ public class UserController implements Serializable {
     public ResponseEntity<UserDTO> update(@PathVariable(value = "id") Long idUser, @RequestBody UserDTO update) throws NotUpdateException {
         return ResponseEntity.ok(this.userService.updateId(idUser, update.getFirstName() ,update.getName()));
     }
+    /** Supprimer un user par son id */
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Boolean> delete(@PathVariable("id") Long idUser) throws NotDeleteException {
         userService.deleteId(idUser);
