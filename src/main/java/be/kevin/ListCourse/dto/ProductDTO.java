@@ -16,6 +16,14 @@ public class ProductDTO  {
     private int poids;
     private Set<Category> categories = new HashSet<>();
 
+    /**
+     * constructeur ProductDTO
+     * @param idProduct
+     * @param name
+     * @param quantity
+     * @param poids
+     * @param categories
+     */
     public ProductDTO(Long idProduct, String name, int quantity, int poids, Set<Category> categories) {
         this.idProduct = idProduct;
         this.name = name;

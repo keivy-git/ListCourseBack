@@ -15,12 +15,21 @@ public class DefaultController {
 
     private static Logger logger = LoggerFactory.getLogger(DefaultController.class);
 
+
+    /**
+     *  renvoi une réponse serveur
+     * @return
+     */
     @GetMapping("/")
     public ResponseEntity<String> pong() {
         logger.info("Démarrage des services ok .....");
         return new ResponseEntity<String>("Réponse du serveur: " + HttpStatus.OK.name(), HttpStatus.OK);
     }
 
+    /**
+     * renvoi une réponse serveur sur /api
+     * @return
+     */
     @GetMapping("/api")
     public @ResponseBody
     String ping() {

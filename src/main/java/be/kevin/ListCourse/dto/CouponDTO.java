@@ -14,6 +14,14 @@ public class CouponDTO {
     private LocalDate dateBegin;
     private LocalDate dateEnd;
 
+    /**
+     * constructeur CouponDTO
+     * @param idCoupon
+     * @param name
+     * @param description
+     * @param dateBegin
+     * @param dateEnd
+     */
     public CouponDTO(Long idCoupon, String name, String description, LocalDate dateBegin, LocalDate dateEnd) {
         this.idCoupon = idCoupon;
         this.name = name;

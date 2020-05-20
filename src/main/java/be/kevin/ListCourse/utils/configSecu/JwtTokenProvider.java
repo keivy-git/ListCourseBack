@@ -1,8 +1,7 @@
 package be.kevin.ListCourse.utils.configSecu;
 
-import be.kevin.ListCourse.service.UserService;
+import be.kevin.ListCourse.service.UserServiceImpl;
 import io.jsonwebtoken.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -19,8 +18,7 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-    @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Value("${security.jwt.token.secret-key:secret}")
     private String secretKey = "secret";

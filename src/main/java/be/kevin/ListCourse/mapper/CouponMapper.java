@@ -7,6 +7,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class CouponMapper implements GenericMapper<CouponDTO, Coupon>  {
 
+    /**
+     * entity to dto
+     * @param coupon
+     * @return new CouponDTO
+     */
     @Override
     public CouponDTO toDto(Coupon coupon) {
         return new CouponDTO(
@@ -18,9 +23,14 @@ public class CouponMapper implements GenericMapper<CouponDTO, Coupon>  {
         );
     }
 
+    /**
+     * dto to entity
+     * @param couponDTO
+     * @return coupon
+     */
     @Override
     public Coupon toEntity(CouponDTO couponDTO) {
-        Coupon coupon = new Coupon()   ;
+        Coupon coupon = new Coupon() ;
         coupon.setName(couponDTO.getName());
         coupon.setDescription(couponDTO.getDescription());
         coupon.setDateBegin(couponDTO.getDateBegin());

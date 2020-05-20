@@ -8,7 +8,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class ProductMapper implements GenericMapper<ProductDTO, Product> {
 
-
+    /**
+     * entity to dto
+     * @param product
+     * @return new ProductDTO
+     */
     @Override
     public ProductDTO toDto(Product product) {
         return new ProductDTO(
@@ -20,6 +24,12 @@ public class ProductMapper implements GenericMapper<ProductDTO, Product> {
 
         );
     }
+
+    /**
+     * dto to entity
+     * @param productDTO
+     * @return product
+     */
     @Override
     public Product toEntity(ProductDTO productDTO) {
         Product product = new Product();

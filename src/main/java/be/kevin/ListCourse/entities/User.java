@@ -39,7 +39,9 @@ public class User implements UserDetails {
     @Column(unique = true, nullable = false, length=50)
     private String name;
 
-    /** @JsonProperty permet de définir un accès précis a l'information... Je peux créer un mot de passe, mais pas l'afficher via le json */
+    /**
+     * @JsonProperty permet de définir un accès précis a l'information... Je peux créer un mot de passe, mais pas l'afficher via le json
+     */
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Column(nullable = false)
     private String password;

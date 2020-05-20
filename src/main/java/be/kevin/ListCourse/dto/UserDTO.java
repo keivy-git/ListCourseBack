@@ -15,17 +15,21 @@ import java.util.Collection;
 
 public class UserDTO implements UserDetails {
 
-
         private Long idUser;
         private String firstName;
         private String name;
         private String email;
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String password;
-        @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-        private String confirmPassword;
 
-
+        /**
+         * constructeur UserDto
+         * @param idUser
+         * @param firstName
+         * @param name
+         * @param email
+         * @param password
+         */
         public UserDTO(Long idUser, String firstName, String name, String email, String password) {
                 this.idUser = idUser;
                 this.firstName = firstName;
@@ -33,6 +37,8 @@ public class UserDTO implements UserDetails {
                 this.email = email;
                 this.password = password;
         }
+
+        //region implements UserDetails
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -67,6 +73,6 @@ public class UserDTO implements UserDetails {
         public boolean isEnabled() {
                 return true;
         }
-
+        //endregion
 
 }
