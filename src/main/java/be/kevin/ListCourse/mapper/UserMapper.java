@@ -20,7 +20,10 @@ public class UserMapper implements GenericMapper<UserDTO, User>{
                 user.getFirstName(),
                 user.getName(),
                 user.getEmail(),
-                user.getPassword()
+                user.getPassword(),
+                user.getRoles(),
+                user.getCoupons(),
+                user.getProducts()
         );
     }
 
@@ -36,6 +39,9 @@ public class UserMapper implements GenericMapper<UserDTO, User>{
         user.setName(userDTO.getName());
         user.setPassword(userDTO.getPassword());
         user.setEmail(userDTO.getEmail());
+        user.setRoles(userDTO.getRoles());
+        user.setCoupons(userDTO.getCoupons());
+        user.setProducts(userDTO.getProducts());
         return user;
     }
 

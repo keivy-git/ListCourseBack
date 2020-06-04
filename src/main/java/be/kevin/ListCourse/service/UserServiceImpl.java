@@ -1,26 +1,23 @@
 package be.kevin.ListCourse.service;
 
 import be.kevin.ListCourse.dto.UserDTO;
-import be.kevin.ListCourse.entities.Role;
 import be.kevin.ListCourse.entities.User;
 import be.kevin.ListCourse.exceptionHandler.NotDeleteException;
 import be.kevin.ListCourse.exceptionHandler.NotUpdateException;
 import be.kevin.ListCourse.mapper.UserMapper;
+import be.kevin.ListCourse.repository.RoleRepository;
 import be.kevin.ListCourse.repository.UserRepository;
-import be.kevin.ListCourse.utils.configSecu.JwtTokenProvider;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -31,29 +28,28 @@ import java.util.stream.Collectors;
  */
 
 @Service
-public class UserServiceImpl implements UserDetailsService, UserService {
+public class UserServiceImpl implements UserService {
 
 
     private UserRepository userRepository;
     private UserMapper userMapper;
+    private RoleRepository roleRepository;
     private AuthenticationManager authenticationManager;
-    private JwtTokenProvider jwtTokenProvider;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository,
                        UserMapper userMapper,
-                       AuthenticationManager authenticationManager,
-                       JwtTokenProvider jwtTokenProvider) {
+                       AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
     }
 
     @Override
     public UserDTO create (UserDTO userDTO) {
         return userMapper.toDto(this.userRepository.save(userMapper.toEntity(userDTO)));
     }
+
     @Override
     public List<UserDTO> getAll(){
         List<User> users = userRepository.findAll();
@@ -88,34 +84,6 @@ public class UserServiceImpl implements UserDetailsService, UserService {
         else {
             throw new NotDeleteException();
         }
-    }
-    // To do
-    @Override
-    public UserDTO login (UserDTO userDTO){
-        try {
-            String login = userDTO.getName();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(login, userDTO.getPassword()));
-            String token = jwtTokenProvider
-                    .createToken(login,
-                            this.userRepository
-                                    .findByName(login)
-                                    .getRoles()
-                                    .stream()
-                                    .map(Role::getAuthority)
-                                    .collect(Collectors.toList())
-                    );
-            Map<Object, Object> model = new HashMap<>();
-            model.put("name", login);
-            model.put("token", token);
-        } catch (Exception e) {
-            throw new BadCredentialsException("Le login et le mot de passe est incorrecte");
-        }
-        return userDTO;
-    }
-
-    @Override
-    public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
-        return userRepository.findByName(name);
     }
 
 }

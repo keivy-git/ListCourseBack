@@ -51,7 +51,6 @@ public class User implements UserDetails {
     private String email;
 
 
-
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER, targetEntity = Role.class)
     @JoinTable(name = "userRole", joinColumns = @JoinColumn(name = "idUser"), inverseJoinColumns = @JoinColumn(name = "idRole"))
     private Set<Role> roles = new HashSet<>();
@@ -67,7 +66,7 @@ public class User implements UserDetails {
 //region Implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return roles;
     }
 
     @Override

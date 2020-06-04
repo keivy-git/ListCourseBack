@@ -1,19 +1,24 @@
 package be.kevin.ListCourse.dto;
 
 
+import be.kevin.ListCourse.entities.Coupon;
+import be.kevin.ListCourse.entities.Product;
+import be.kevin.ListCourse.entities.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.Collection;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 /**Data Transfert Object */
 @Data
 
-public class UserDTO implements UserDetails {
+public class UserDTO {
 
         private Long idUser;
         private String firstName;
@@ -21,6 +26,9 @@ public class UserDTO implements UserDetails {
         private String email;
         @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
         private String password;
+        private Set<Role> roles = new HashSet<>();
+        private Set<Coupon> coupons = new HashSet<>();
+        private Set<Product> products = new HashSet<>();
 
         /**
          * constructeur UserDto
@@ -29,50 +37,20 @@ public class UserDTO implements UserDetails {
          * @param name
          * @param email
          * @param password
+         * @param roles
          */
-        public UserDTO(Long idUser, String firstName, String name, String email, String password) {
+        public UserDTO(Long idUser, String firstName, String name, String email, String password, Set<Role> roles, Set<Coupon> coupons, Set<Product> products) {
                 this.idUser = idUser;
                 this.firstName = firstName;
                 this.name = name;
                 this.email = email;
                 this.password = password;
+                this.roles = roles;
+                this.coupons = coupons;
+                this.products = products;
+
         }
 
-        //region implements UserDetails
 
-        @Override
-        public Collection<? extends GrantedAuthority> getAuthorities() {
-                return null;
-        }
-
-        @Override
-        public String getUsername() {
-                return name;
-        }
-        @Override
-        public String getPassword() {
-                return password;
-        }
-
-        @Override
-        public boolean isAccountNonExpired() {
-                return true;
-        }
-
-        @Override
-        public boolean isAccountNonLocked() {
-                return true;
-        }
-
-        @Override
-        public boolean isCredentialsNonExpired() {
-                return true;
-        }
-
-        @Override
-        public boolean isEnabled() {
-                return true;
-        }
-        //endregion
 
 }

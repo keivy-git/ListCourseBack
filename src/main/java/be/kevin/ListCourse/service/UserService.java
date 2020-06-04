@@ -17,5 +17,4 @@ public interface UserService {
     UserDTO getOneById(Long idUser) throws NotFoundException;
     UserDTO updateId(Long idUser, String firstName, String name) throws NotUpdateException;
     void deleteId(Long idUser) throws NotDeleteException;
-    UserDTO login(UserDTO userDTO);
 }
