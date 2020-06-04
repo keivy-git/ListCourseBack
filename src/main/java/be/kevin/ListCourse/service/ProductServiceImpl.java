@@ -32,6 +32,7 @@ public class ProductServiceImpl implements ProductService{
     public ProductDTO create(ProductDTO productDTO) {
         return productMapper.toDto(this.productRepository.save(productMapper.toEntity(productDTO)));
     }
+
     @Override
     public List<ProductDTO> getAll(){
         List<Product> products = productRepository.findAll();
@@ -39,11 +40,13 @@ public class ProductServiceImpl implements ProductService{
                 .map((productMapper::toDto))
                 .collect(Collectors.toList());
     }
+
     @Override
     public ProductDTO getOneById(Long idProduct) throws NotFoundException {
         return productMapper.toDto(this.productRepository.findById(idProduct)
                 .orElseThrow(() -> new NotFoundException("L'id du produit n'a pas été trouvé")));
     }
+
     @Override
     public ProductDTO update(Long idProduct, String name, int quantity, int poids, Set<Category> category) throws NotUpdateException {
         Optional<Product> optional = this.productRepository.findById(idProduct);
@@ -58,6 +61,7 @@ public class ProductServiceImpl implements ProductService{
             throw new NotUpdateException();
         }
     }
+
     @Override
     public void delete(Long idProduct) throws NotDeleteException {
         if (this.productRepository.existsById(idProduct)) {

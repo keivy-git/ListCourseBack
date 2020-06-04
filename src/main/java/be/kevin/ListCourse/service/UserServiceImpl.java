@@ -57,11 +57,13 @@ public class UserServiceImpl implements UserService {
                 .map((userMapper::toDto))
                 .collect(Collectors.toList());
     }
+
     @Override
     public  UserDTO getOneById(Long idUser) throws NotFoundException  {
         return userMapper.toDto(this.userRepository.findById(idUser)
                 .orElseThrow(() -> new NotFoundException("L'id de l'utilisateur n'a pas été trouvé")));
     }
+
     @Override
     public UserDTO updateId(Long idUser, String firstName, String name) throws NotUpdateException{
         Optional<User> optional = this.userRepository.findById(idUser);
@@ -75,6 +77,7 @@ public class UserServiceImpl implements UserService {
             throw new NotUpdateException();
         }
     }
+
     @Override
     public void deleteId(Long idUser) throws NotDeleteException {
         if (this.userRepository.existsById(idUser) ) {
@@ -85,6 +88,5 @@ public class UserServiceImpl implements UserService {
             throw new NotDeleteException();
         }
     }
-
 }
 

@@ -31,6 +31,7 @@ public class CouponServiceImpl implements CouponService{
     public CouponDTO create(CouponDTO couponDTO) {
         return couponMapper.toDto(this.couponRepository.save(couponMapper.toEntity(couponDTO)));
     }
+
     @Override
     public List<CouponDTO> getAll(){
         List<Coupon> coupons = couponRepository.findAll();
@@ -38,11 +39,13 @@ public class CouponServiceImpl implements CouponService{
                 .map((couponMapper::toDto))
                 .collect(Collectors.toList());
     }
+
     @Override
     public CouponDTO getOneById(Long idCoupon) throws NotFoundException {
         return couponMapper.toDto(this.couponRepository.findById(idCoupon)
                 .orElseThrow(() -> new NotFoundException("l'id des coupons n'a pas été trouvé")));
     }
+
     @Override
     public CouponDTO update(Long idCoupon, String name, String description, LocalDate dateBegin, LocalDate dateEnd) throws NotUpdateException {
         Optional<Coupon> optionalCoupon = this.couponRepository.findById(idCoupon);
@@ -57,6 +60,7 @@ public class CouponServiceImpl implements CouponService{
             throw new NotUpdateException();
         }
     }
+
     @Override
     public void delete(Long idCoupon) throws NotDeleteException {
         if (this.couponRepository.existsById(idCoupon) ) {
@@ -67,7 +71,5 @@ public class CouponServiceImpl implements CouponService{
             throw new NotDeleteException();
         }
     }
-
-
 }
 

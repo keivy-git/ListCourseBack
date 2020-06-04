@@ -56,6 +56,7 @@ public class UserController {
         this.jwtTokenUtil = jwtTokenUtil;
         this.jwtInMemoryUserDetailsService = jwtInMemoryUserDetailsService;
     }
+
     /**
      * méthode pour afficher la liste des utilisateurs
      * @return
@@ -76,6 +77,7 @@ public class UserController {
         UserDTO userDTO = userService.getOneById(idUser);
             return new ResponseEntity<UserDTO>(userDTO, HttpStatus.FOUND);
     }
+
     /**
      * méthode qui permet la création d'un utilisateur
      * @param userDTO
@@ -98,6 +100,7 @@ public class UserController {
     public ResponseEntity<UserDTO> update(@PathVariable(value = "id") Long idUser, @RequestBody UserDTO update) throws NotUpdateException {
         return ResponseEntity.ok(this.userService.updateId(idUser, update.getFirstName() ,update.getName()));
     }
+
     /** Supprimer un user par son id */
     /**
      * méthode pour supprimer un utilisateur
