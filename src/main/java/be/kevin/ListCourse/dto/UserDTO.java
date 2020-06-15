@@ -50,7 +50,4 @@ public class UserDTO {
                 this.products = products;
 
         }
-
-
-
 }
