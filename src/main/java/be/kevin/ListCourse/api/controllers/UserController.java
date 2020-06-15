@@ -40,7 +40,7 @@ public class UserController {
     private AuthenticationManager authenticationManager;
     private JwtTokenUtil jwtTokenUtil;
     private UserDetailsService jwtInMemoryUserDetailsService;
-    /** test pour git */
+
     /**
      * Controlleur
      * @param userService
