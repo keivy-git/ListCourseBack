@@ -30,15 +30,7 @@ public class UserDTO {
         private Set<Coupon> coupons = new HashSet<>();
         private Set<Product> products = new HashSet<>();
 
-        /**
-         * constructeur UserDto
-         * @param idUser
-         * @param firstName
-         * @param name
-         * @param email
-         * @param password
-         * @param roles
-         */
+        /**Constructeur */
         public UserDTO(Long idUser, String firstName, String name, String email, String password, Set<Role> roles, Set<Coupon> coupons, Set<Product> products) {
                 this.idUser = idUser;
                 this.firstName = firstName;

@@ -41,11 +41,8 @@ public class UserController {
     private JwtTokenUtil jwtTokenUtil;
     private UserDetailsService jwtInMemoryUserDetailsService;
 
-    /**
-     * Controlleur
-     * @param userService
-     * @param passwordEncoder
-     */
+    /**Constructeur */
+
     @Autowired
     public UserController(UserServiceImpl userService, PasswordEncoder passwordEncoder,
                           AuthenticationManager authenticationManager, JwtTokenUtil jwtTokenUtil,
@@ -72,6 +69,7 @@ public class UserController {
      * @return
      * @throws NotFoundException
      */
+
     @GetMapping("{id}")
     public ResponseEntity<UserDTO> getOneById(@PathVariable(value = "id") Long idUser) throws NotFoundException {
         UserDTO userDTO = userService.getOneById(idUser);
